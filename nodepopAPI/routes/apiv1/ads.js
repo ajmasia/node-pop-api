@@ -7,6 +7,8 @@ const Ad = require('../../models/Ad');
 
 // list ads middleware
 // GET method
+
+// TODO: Resolve problem with sinmultaneus filter price and forsale
 router.get('/', async (req, res, next) => {
     // try {
     //     const docs = await Ad.find();
@@ -18,17 +20,52 @@ router.get('/', async (req, res, next) => {
     //     return next(err);
     // }
     try {
+        // data filter
         const name = req.query.name;
         const forSale = req.query.forSale;
         const tags = req.query.tags;
-        console.log(name);
+        const price = req.query.price;
+        console.log(forSale);
+        // create filter object
         const filter = {};
         
         if ( typeof name !== 'undefined' ) filter.name = name;
         if ( typeof forSale !== 'undefined' ) filter.forSale = parseBoolean(forSale);
-        if ( typeof tags !== 'undefined' ) filter.tags = tags;
-        console.log(filter);
+        if ( typeof tags !== 'undefined' ) {
+            if ( Array.isArray(tags) ) {
+                filter.tags = {$in: tags};
+            } else {
+                filter.tags = tags;
+            }
+          }
         
+        if ( typeof price !== 'undefined'  ) {
+
+            const priceRange = price.split('-');
+            
+            console.log(priceRange.length);
+            
+            if ( priceRange.length == 1 ) {
+                filter.price = price;
+            }
+            if ( priceRange.length == 2 ) {
+                if ( priceRange[0] == '' ) {
+                    filter.price = { $lte: priceRange[1] };
+                }
+                if ( priceRange[1] == '' ) {
+                    filter.price = { $gte: priceRange[0] };
+                }
+                if ( priceRange[0] < priceRange[1] ) {
+                    filter.price = { $gte: priceRange[0], $lte: priceRange[1] }
+                }
+                if ( priceRange[0] > priceRange[1] ) {
+                    filter.price = { $gte: priceRange[1], $lte: priceRange[0] }
+                }
+            }
+        }
+        // if ( price == 'null' || price == '0') filter.price = null;
+    
+        console.log(filter);    
         const docs = await Ad.list(filter);
         res.json({
             success: true,
@@ -112,5 +149,6 @@ function parseBoolean (string) {
     if ( string.toLowerCase() == 'false' ) return false;
     return undefined;
 } 
+
 
 module.exports = router;
