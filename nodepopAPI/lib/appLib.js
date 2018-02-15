@@ -1,13 +1,13 @@
 "use strict";
 
 // isAPI request validation function
-function isAPI(req) {
+module.exports.isAPI = function (req) {
     return req.originalUrl.indexOf('/apiv') === 0;
   }
 
 
 // parseBoolena from string function
-function parseBoolean (string) {
+module.exports.parseBoolean = function  (string) {
     var bool;
     switch ( string.toLowerCase() ) {
         case "true": return true;

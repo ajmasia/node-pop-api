@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var appLib = require('./lib/appLib');
 
 // require database connection
 require('./lib/dbConnect');
@@ -29,7 +30,7 @@ app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 
 // nodepop_back middlewares
-app.use('/apiv1/nodepop', require('./routes/apiv1/ads'));
+app.use('/apiv1', require('./routes/apiv1/ads'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -50,7 +51,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
 
   // error response if is and API request with JSON format
-  if ( isAPI(req) ) {
+  if ( appLib.isAPI(req) ) {
     res.json({
       success: false,
       error: err.message
@@ -65,10 +66,5 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.render('error');
 });
-
-// isAPI request validation function
-function isAPI(req) {
-  return req.originalUrl.indexOf('/apiv') === 0;
-}
 
 module.exports = app;
