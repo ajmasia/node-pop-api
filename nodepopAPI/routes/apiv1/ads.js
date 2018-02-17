@@ -1,14 +1,15 @@
 'use strict';
 
+// require necesary libraries
+const appLib = require('../../lib/appLib');
 const express = require('express');
 const router = express.Router();
 
+// require data model
 const Ad = require('../../models/Ad');
-var appLib = require('../../lib/appLib');
 
 // list ads middleware
 // GET method
-
 router.get('/', async (req, res, next) => {
    
     try {
@@ -40,7 +41,7 @@ router.get('/', async (req, res, next) => {
             } else {
                 filter.tags = tags;
             }
-          }
+        }
         
           // filter by price validation
         if ( typeof price !== 'undefined'  ) {
@@ -108,7 +109,7 @@ router.get('/tags', async (req, res, next) => {
 
 // get add by id middleware
 // GET method
-router.get('/:id', async (req, res, nest) => {
+router.get('/:id', async (req, res, next) => {
     try {
         const _id = req.params.id;
         const doc = await Ad.find({_id: _id});
@@ -136,13 +137,14 @@ router.post('/', async (req, res, next) => {
             success: true,
             result: adSaved
         });
+        
+        // Status server 201: New data created
+        res.status(201);
 
     } catch(err) {
         return next(err);
     }
 
-    // Status server 201: New data created
-    res.status(201);
 });
 
 // update ad middleware
@@ -158,7 +160,7 @@ router.put('/:id', async (req, res, next) => {
             result: updatedAd
         });
     } catch(err) {
-
+        return next(err);
     }
 })
 
@@ -169,19 +171,11 @@ router.delete('/:id', async (req, res, next) => {
         const _id = req.params.id;
         await Ad.remove({_id: _id}).exec(); 
         res.json({
-            success: true
+            success: true,
         });
     } catch(err) {
-        return next();
+        return next(err);
     }
 })
-
-// parseBoolena from string function
-function parseBoolean (string) {
-   
-    if ( string.toLowerCase() == 'true' ) return true;
-    if ( string.toLowerCase() == 'false' ) return false;
-    return undefined;
-} 
 
 module.exports = router;

@@ -1,0 +1,75 @@
+{
+    "ads": [{
+            "tags": [
+                "xiaomi",
+                "mi6",
+                "phone"
+            ],
+            "name": "Xiaomi Mi6",
+            "forSale": true,
+            "price": 320,
+            "image": "xiami_mi6_13467.jpg"
+        },
+        {
+            "tags": [
+                "dell",
+                "laptop"
+            ],
+            "name": "Dell XPS 13 9370",
+            "forSale": true,
+            "price": 800,
+            "image": "dell_xps_13_9370_43578.jpg"
+        },
+        {
+            "tags": [
+                "apple",
+                "iphone"
+            ],
+            "name": "iPhone 7",
+            "forSale": true,
+            "price": 450,
+            "image": "iphone7_13467.jpg"
+        },
+        {
+            "tags": [
+                "volkswagen",
+                "golf"
+            ],
+            "name": "Volkswagen Golf TDI 1.9",
+            "forSale": false,
+            "price": null,
+            "image": "golf_tdi_19.jpg"
+        },
+        {
+            "tags": [
+                "book",
+                "productivity"
+            ],
+            "name": "Getting things done",
+            "forSale": true,
+            "price": 6,
+            "image": "gettingThingsDone_book.jpg"
+        },
+        {
+            "tags": [
+                "apple",
+                "ipad",
+                "tablet"
+            ],
+            "name": "iPad Pro 10,5'' Silver",
+            "forSale": true,
+            "price": 780,
+            "image": "ipad_pro_10_5_silver.jpg"
+        },
+        {
+            "tags": [
+                "apple",
+                "nas"
+            ],
+            "name": "Synology DiskStation DS718+",
+            "forSale": true,
+            "price": 540,
+            "image": "synology_ds717p.jpg"
+        }
+    ]
+}

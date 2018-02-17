@@ -12,7 +12,7 @@ connection.on('error', err => {
 
 // once opene event
 connection.once('open', () => {
-    console.log('Connect to database on', mongoose.connection.name);
+    console.log('Connected to database on', mongoose.connection.name);
 })
 
 // connect to MongoDB
