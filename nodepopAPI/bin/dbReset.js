@@ -4,63 +4,60 @@
 
 'use strict';
 
-const mongoDB = require('mongodb').MongoClient;
+// Require config
+const config = require('../config');
+
+// Require dependences
+const mongoClient = require('mongodb').MongoClient;
 const fileSystem = require('fs');
 
-async function dbReset() {
+
+( async function() {
+  
+    let client;
+    console.log('Tryint to connect MongoDB ...');
+  
     try {
+        // Connect to database
+        client = await mongoClient.connect(config.mongoURL);
+        console.log('Connected successfully to server on:', config.mongoURL);
+        const db = client.db(config.db);
+    
+        // Delete collection
         try {
-            const url = 'mongodb://localhost/nodepop';
-            console.log('Trying to connect to the database');
-            var dbCon = await mongoDB.connect(url);
-            console.log('Connected to database on', url);
+            await db.collection(config.collectionName).drop();
+            console.log(`Collection ${config.collectionName} deleted`);
         } catch(err) {
-            console.log('MongoDB connection error:', err);
-            process.exit(1);
-        }
-
-        await resetDatabase(dbCon, 'ads', '../test_data/testData.json');
-
-        console.log('Clossing mongoDb connection');
-        await dbConnect.close();
-    } catch(err) {
-        console.log('An error ocurred:', err);
-        process.exit(1);
-    }
-}
-
-async function resetDatabase (con, collectionName, dataFile) {
-    try {
-        console.log('Trying to delete colletion:', collectionName);
-
-        try {
-            await con.collection(collectionName).drop();
-            console.log(`Collection ${collectionName} deleted`);
-        } catch(err) {
-            if ( err.message !== 'ns not found' ) {
+            if (err.message !== 'ns not found') {
                 throw err;
             }
         }
 
+        // Read file data from config.fileData
         try {
-            console.log('Reading data file from:', dataFile);
-            var jsonData = JSON.parse(fileSystem.readFileSync(dataFile, 'utf8'));
+            console.log('Reading data file from:', config.fileData);
+            var jsonData = JSON.parse(fileSystem.readFileSync(config.fileData, 'utf8'));
+            console.log('JSON data readed successfully from file');
         } catch(err) {
             console.log('An error ocurred trying read data from file:', err);
         }
 
+        // Create new docs in database
         try {
-            console.log(`Creating new docs in ${collectionName} collection`);
+            console.log(`Creating new docs in ${config.collectionName} collection`);
             const fileCollectionName = Object.keys(jsonData)[0];
-            await con.collection(collectionName).insertMany(jsonData[fileCollectionName]);
+            await db.collection(config.collectionName).insertMany(jsonData[fileCollectionName]);
 
         } catch(err) {
-            console.log(`An error ocurred creating new docs in ${collectionName} collection:`, err);
+            console.log(`An error ocurred creating new docs in ${config.collectionName} collection:`, err);
         }
-
-    } catch(err) {
-        throw err;
+  
+    } catch (err) {
+        console.log('MongoDB connection error:', err);
+        process.exit(1);
     }
-}
-
-dbReset();
+  
+    // Close connection
+    console.log('Clossing mongoDb connection');
+    client.close();
+  })();

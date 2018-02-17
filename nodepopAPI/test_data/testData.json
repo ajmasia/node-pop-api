@@ -70,6 +70,16 @@
             "forSale": true,
             "price": 540,
             "image": "synology_ds717p.jpg"
+        },
+        {
+            "tags": [
+                "moleskine",
+                "write tool"
+            ],
+            "name": "Moleskine 11427",
+            "forSale": true,
+            "price": 8.75,
+            "image": "moleskine11427.jpg"
         }
     ]
 }

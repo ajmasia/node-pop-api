@@ -1,5 +1,6 @@
 'use strict';
 
+const config = require('../config');
 const mongoose = require('mongoose');
 const connection = mongoose.connection;
 
@@ -12,8 +13,8 @@ connection.on('error', err => {
 
 // once opene event
 connection.once('open', () => {
-    console.log('Connected to database on', mongoose.connection.name);
+    console.log('Connected successfully to database on', config.mongoURL + config.db);
 })
 
 // connect to MongoDB
-mongoose.connect('mongodb://localhost/nodepop');
+mongoose.connect(config.mongoURL + config.db);

@@ -1,14 +1,19 @@
+/**
+ * NodeAPI ads router
+ */
+
 'use strict';
 
-// require necesary libraries
+// Require dependences
 const appLib = require('../../lib/appLib');
 const express = require('express');
 const router = express.Router();
+const { check, validationResult } = require('express-validator/check');
 
-// require data model
+// Require data model
 const Ad = require('../../models/Ad');
 
-// list ads middleware
+// List ads middleware
 // GET method
 router.get('/', async (req, res, next) => {
    
@@ -21,20 +26,20 @@ router.get('/', async (req, res, next) => {
         const skip = parseInt(req.query.skip);
         const limit = parseInt(req.query.limit);
         const sort = req.query.sort;
-        const fields = req.query.fields;
+        const fields = req.query.field;
         
         // Build filter query with parameters
         const filter = {};
         
-        // filter by name validation
+        // Filter by name validation
         if ( typeof name !== 'undefined' ) {
             (name !== '' ) ? filter.name = { $regex: '.*' + name + '.*', $options: 'i'} : filter.name = name;
         }
 
-        // filter by forsale validation
+        // Filter by forsale validation
         if ( typeof forSale !== 'undefined' ) filter.forSale = appLib.parseBoolean(forSale);
         
-        // filter by tags validation
+        // Filter by tags validation
         if ( typeof tags !== 'undefined' ) {
             if ( Array.isArray(tags) ) {
                 filter.tags = { $in: tags };
@@ -43,13 +48,12 @@ router.get('/', async (req, res, next) => {
             }
         }
         
-          // filter by price validation
+        // Filter by price validation
         if ( typeof price !== 'undefined'  ) {
 
             const priceRange = price.split('-');
-            console.log(priceRange);            
            
-            if ( priceRange.length == 1 ) {
+            if ( priceRange.length == 1 ) { 
                 filter.price = price;
             }
            
@@ -68,10 +72,10 @@ router.get('/', async (req, res, next) => {
 
         if ( price == 'null' || price == '0') filter.price = null;
         
-        // run query
+        // Run query
         const docs = await Ad.list(filter, skip, limit, sort, fields);
        
-        // query response
+        // Query response
         res.json({
             success: true,
             result: docs
@@ -87,7 +91,7 @@ router.get('/', async (req, res, next) => {
     }
 });
 
-// get all tags middleware
+// Get all tags middleware
 // GET Metthod
 
 router.get('/tags', async (req, res, next) => {
@@ -98,6 +102,7 @@ router.get('/tags', async (req, res, next) => {
             result: tags
         });
         
+        // Status server 204: Content not found
         if ( tags.length === 0 ) {
             res.status(204);
         }
@@ -107,7 +112,7 @@ router.get('/tags', async (req, res, next) => {
     }
 })
 
-// get add by id middleware
+// Get add by id middleware
 // GET method
 router.get('/:id', async (req, res, next) => {
     try {
@@ -117,18 +122,24 @@ router.get('/:id', async (req, res, next) => {
             success: true,
             result: doc
         });
+    
+    // Status server 204: Content not found
+    if ( doc.length === 0 ) {
+        res.status(204);
+    }
         
     } catch(err) {
         return next(err);
     }
 })
 
-// create ad middleware
+// Create ad middleware
 // POST method
-router.post('/', async (req, res, next) => {
+// Todo: Validation
+router.post('/', [],async (req, res, next) => {
     try {
 
-        // create new ad data using his model
+        // Create new ad data using his model
         const newAd = new Ad(req.body);
 
         const adSaved = await newAd.save(newAd);
@@ -147,8 +158,9 @@ router.post('/', async (req, res, next) => {
 
 });
 
-// update ad middleware
+// Update ad middleware
 // PUT method
+// Todo: Validation
 router.put('/:id', async (req, res, next) => {
     try {
         const _id = req.params.id;
@@ -164,7 +176,7 @@ router.put('/:id', async (req, res, next) => {
     }
 })
 
-// delete add middleware
+// Delete add middleware
 // DELETE method
 router.delete('/:id', async (req, res, next) => {
     try {

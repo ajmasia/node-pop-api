@@ -1,3 +1,6 @@
+/**
+ * NodeAPI index router with filters
+ */
 'use strict';
 
 var express = require('express');
@@ -23,15 +26,15 @@ router.get('/', async (req, res, next) => {
       // Build filter query with parameters
       const filter = {};
       
-      // filter by name validation
+      // Filter by name validation
       if ( typeof name !== 'undefined' ) {
           (name !== '' ) ? filter.name = { $regex: '.*' + name + '.*', $options: 'i'} : filter.name = name;
       }
 
-      // filter by forsale validation
+      // Filter by forsale validation
       if ( typeof forSale !== 'undefined' ) filter.forSale = appLib.parseBoolean(forSale);
       
-      // filter by tags validation
+      // Filter by tags validation
       if ( typeof tags !== 'undefined' ) {
           if ( Array.isArray(tags) ) {
               filter.tags = { $in: tags };
@@ -40,11 +43,10 @@ router.get('/', async (req, res, next) => {
           }
         }
       
-        // filter by price validation
+        // Filter by price validation
       if ( typeof price !== 'undefined'  ) {
 
-          const priceRange = price.split('-');
-          console.log(priceRange);            
+          const priceRange = price.split('-');          
          
           if ( priceRange.length == 1 ) {
               filter.price = price;
@@ -65,10 +67,10 @@ router.get('/', async (req, res, next) => {
 
       if ( price == 'null' || price == '0') filter.price = null;
       
-      // run query
+      // Run query
       const docs = await Ad.list(filter, skip, limit, sort, fields);
      
-      // query response
+      // Query response
       res.render('index', { 
         title: 'NodePop',
         docs: docs
