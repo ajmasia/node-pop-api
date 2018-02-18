@@ -3,11 +3,11 @@ A Rest API to learn coding
 ## Instalation
 This app need a MongoDB engine to work. Before installing this app we must to know the correct parameters to access to database server.
 
-To install NodePOP Rest API, move to app´s rrot directory and run this command:
+To install NodePOP Rest API, move to app´s root directory and run this command:
 
 `npm install`
 
-when you install the app, you must configure the system parameters. You can do it by editing the file `config.js`. If you are going to test the app on a local server, you can use default parameters.
+When you install the app, you must configure the system parameters. You can do it by editing the file `config.js`. If you are going to test the app on a local server, you can use default parameters.
 
 ```js
 module.exports = {
@@ -28,13 +28,13 @@ To start the app, issue the following command:
 
 `npm start`
 
-If yoy want run the app in debbug mode run the nex command:
+If yoy want run the app in debbug mode run the next command:
 
 `npm run dev`
 
 To stop de app press CTRL + C keys.
 
-Rhen you access to the home page, you will can see a page with an ads list. In this page you can test the filters that are described in the API documentation.
+When you access to the home page, you will can see a page with an ads list. In this page you can test the filters that are described in the API documentation.
 
 ## API Documentation
 
