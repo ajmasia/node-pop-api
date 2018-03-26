@@ -4,16 +4,17 @@
  * Module dependencies
  */
 
-const config = require('../config');
+require('dotenv').config();
+
 var app = require('../app');
-var debug = require('debug')('nodepop-back:server');
+var debug = require('debug')('nodepop:server');
 var http = require('http');
 
 /**
  * Get port from environment and store in Express
  */
 
-var port = normalizePort(config.port);
+var port = normalizePort(process.env.PORT);
 app.set('port', port);
 
 /**

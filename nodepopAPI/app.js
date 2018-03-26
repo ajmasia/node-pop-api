@@ -10,7 +10,7 @@ var bodyParser = require('body-parser');
 var appLib = require('./lib/appLib');
 
 // Require database connection
-require('./lib/dbConnect');
+const dbConnect = require('./lib/dbConnect');
 
 // Require models
 require('./models/Ad');

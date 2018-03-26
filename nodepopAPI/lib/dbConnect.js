@@ -1,20 +1,23 @@
 'use strict';
 
-const config = require('../config');
 const mongoose = require('mongoose');
-const connection = mongoose.connection;
+const dbConnect = mongoose.connection;
 
-// error event control
-connection.on('error', err => {
+mongoose.Promise = global.Promise;
+
+// Error event control
+dbConnect.on('error', err => {
     console.log('MongoDB connection error:', err);
     // stop app
     process.exit(1);
 });
 
 // once opene event
-connection.once('open', () => {
-    console.log('Connected successfully to database on', config.mongoURL + config.db);
+dbConnect.once('open', () => {
+    console.log('Connected successfully to database on', process.env.MONGO_URL + process.env.DB_NAME);
 })
 
 // connect to MongoDB
-mongoose.connect(config.mongoURL + config.db);
+mongoose.connect(process.env.MONGO_URL + process.env.DB_NAME);
+
+module.export = dbConnect;
