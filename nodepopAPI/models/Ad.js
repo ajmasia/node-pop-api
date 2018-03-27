@@ -1,10 +1,13 @@
 'use strict';
 
-// ads model
-// require mongoose library
+/**
+ * Ad model data
+ */
+
+ // Require mongoose library
 const mongoose = require('mongoose');
 
-// define ad schema
+// Define ad schema
 const adSchema = mongoose.Schema({
     name: { type: String, index: true },
     forSale: { type: Boolean, index: true },
@@ -13,7 +16,7 @@ const adSchema = mongoose.Schema({
     tags: { type: [String], index: true }
 });
 
-// create static method model by async function
+// Create static method model by async function
 adSchema.statics.list = function (filter, skip, limit, sort, fields, callback) {
     
     // get query whithout execute it
@@ -29,8 +32,8 @@ adSchema.statics.list = function (filter, skip, limit, sort, fields, callback) {
     return query.exec(callback);
 }
 
-// create model
+// Create model
 const Ad = mongoose.model('Ad', adSchema);
 
-// expor model
+// Expor model
 module.exports = Ad;
