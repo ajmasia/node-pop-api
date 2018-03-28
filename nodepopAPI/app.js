@@ -9,6 +9,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var appLib = require('./lib/appLib');
 
+// Requiren controllers
+const usersController = require('./controllers/apiv1/userController');
+
 // Require database connection
 const dbConnect = require('./lib/dbConnect');
 
@@ -38,6 +41,7 @@ app.use('/', require('./routes/index'));
 
 // Nodeapi middlewares
 app.use('/apiv1', require('./routes/apiv1/ads'));
+app.post('/apiv1/singup', usersController.singUp);
 
 // Catch 404 and forward to error handler
 app.use(function(req, res, next) {
