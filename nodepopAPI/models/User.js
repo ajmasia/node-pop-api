@@ -56,6 +56,21 @@ userSchema.statics.getGravatar = function (email) {
     })
 }
 
+// List method
+userSchema.statics.list = function (filter, skip, limit, sort, fields, callback) {
+    
+    // get query whithout execute it
+    const query = User.find(filter);
+    
+    // get query parameters 
+    query.skip(skip);
+    query.limit(limit);
+    query.sort(sort);
+    query.select(fields);
+    
+    // return execute query
+    return query.exec(callback);
+}
 
 // Create model
 const User = mongoose.model('User', userSchema);

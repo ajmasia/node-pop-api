@@ -9,14 +9,13 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var appLib = require('./lib/appLib');
 
-// Requiren controllers
-const usersController = require('./controllers/apiv1/userController');
 
 // Require database connection
 const dbConnect = require('./lib/dbConnect');
 
 // Require models
 require('./models/Ad');
+require('./models/User');
 
 var app = express();
 
@@ -36,12 +35,23 @@ app.use(cookieParser());
 // Static documents middleware
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Web app middlewares
-app.use('/', require('./routes/index'));
+// Requiren controllers
+const usersController = require('./controllers/apiv1/userController');
 
-// Nodeapi middlewares
-app.use('/apiv1', require('./routes/apiv1/ads'));
+/**
+ * API middelwares
+ */
+app.get('/apiv1/users', usersController.usersList);
 app.post('/apiv1/singup', usersController.singUp);
+app.delete('/apiv1/users/:id', usersController.deleteUser);
+app.put('/apiv1/users/:id', usersController.updateUser);
+app.post('/apiv1/login', usersController.singIn);
+app.use('/apiv1/ads', require('./routes/apiv1/ads'));
+
+/**
+ * Weba app middelwares
+ */
+app.use('/', require('./routes/index'));
 
 // Catch 404 and forward to error handler
 app.use(function(req, res, next) {
