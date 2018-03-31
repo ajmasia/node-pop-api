@@ -27,7 +27,7 @@ router.get('/', async (req, res, next) => {
         const limit = parseInt(req.query.limit);
         const sort = req.query.sort;
         const fields = req.query.field;
-        
+    
         // Build filter query with parameters
         const filter = {};
         
@@ -85,7 +85,6 @@ router.get('/', async (req, res, next) => {
         if ( docs.length === 0 ) {
             res.status(204);
         }
-
     } catch(err) {
         return next(err);
     }

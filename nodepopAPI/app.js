@@ -37,16 +37,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Requiren controllers
 const usersController = require('./controllers/apiv1/userController');
+const jstAuth = require('./middlewares/jwtAuth');
 
 /**
  * API middelwares
  */
-app.get('/apiv1/users', usersController.usersList);
 app.post('/apiv1/singup', usersController.singUp);
-app.delete('/apiv1/users/:id', usersController.deleteUser);
-app.put('/apiv1/users/:id', usersController.updateUser);
 app.post('/apiv1/login', usersController.singIn);
-app.use('/apiv1/ads', require('./routes/apiv1/ads'));
+app.delete('/apiv1/users/:id', jstAuth(), usersController.deleteUser);
+app.put('/apiv1/users/:id', jstAuth(), usersController.updateUser);
+app.get('/apiv1/users', jstAuth(), usersController.usersList);
+app.use('/apiv1/ads', jstAuth(), require('./routes/apiv1/ads'));
 
 /**
  * Weba app middelwares

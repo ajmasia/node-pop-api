@@ -7,6 +7,8 @@
  // Require dependences
 const User = require('../../models/User');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const moment = require('moment');
 
 class UserController {
 
@@ -94,31 +96,49 @@ class UserController {
         }    
     }
 
-    // Sing in middleware
+    /** 
+    * Sing in middleware
+    * Method: POST
+    * Route: /apiv1/login
+    */
     async singIn (req, res , next) {
 
         try {
-
+            
+            // Get user data
             const email = req.body.email;
             const password = req.body.password;
 
-            const existingUser = await User.findOne({ email: email }).select('password displayName');
-            console.log(existingUser.user);
+            // Search user by email
+            const existingUser = await User.findOne({ email: email }).select('_id password displayName');
 
             // Verify if existing user is true and his password is ok
             if ( !existingUser || !await bcrypt.compare(password, existingUser.password) ) {
                 res.status(401);
                 res.json({
                     success: false,
-                    result: 'Opps! Bad credentials! Please, try again!'
+                    result: 'Opps! Bad credentials!'
                 })
                 return;
             }
 
-            res.json({
-                success: true,
-                result: `Wellcome to NodePop ${existingUser.displayName}`
-            })
+            // User is ok -> Create token for this authenticate user
+            const payload = {
+                sub: existingUser._id,
+                iat: moment().unix(),
+                exp: moment().add(process.env.JWT_EXP_TIME, process.env.JWT_EXP_UNIT).unix()
+            }
+        
+            jwt.sign(payload, process.env.JWT_SECRET, (err, token) => {
+                if (err) {
+                    return next(err);
+                }
+                res.json({
+                    success: true,
+                    result: `Wellcome to NodePop ${existingUser.displayName}`,
+                    token: token
+                });
+            });
 
         } catch(err) {
             return next(err);

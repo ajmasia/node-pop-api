@@ -1,0 +1,42 @@
+'use strict';
+
+/** 
+ * Authentification middleware
+ * This middelware chek if recived token is valid for each API request
+ */
+
+ // Require dependences
+const jwt = require('jsonwebtoken');
+const moment = require('moment');
+
+module.exports = function() {
+    
+    return function(req, res, next) {
+
+        // Get token from request
+        const token = req.body.token || req.query.token || req.get('x-access-token');
+
+        
+        if (!token) {
+            const err = new Error('No token provided');
+            next(err);
+            return;
+        }
+
+        // Verify token
+        jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+            
+            if (err) {
+                return next(err);
+            }
+        
+            // Get user id to be used by next middlewares
+            req.apiUserId = decodedToken.sub;
+      
+            // Token is ok -> Go to next middleware
+            next();
+      
+          });
+    }
+}
+

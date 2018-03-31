@@ -1,5 +1,6 @@
-# NodePop
+# NodePop 0.2
 A Rest API to learn coding
+
 ## Instalation
 This app need a MongoDB engine to work. Before installing this app we must to know the correct parameters to access to database server.
 
@@ -38,53 +39,60 @@ When you access to the home page, you will can see a page with an ads list. In t
 
 ## API Documentation
 
-### The API provides the following operations:
+### Users
+
+### Ads
+
+#### The API provides the following operations:
 
 | Method  | Result | Route |
 | ------------- | ------------- | ------------- |
-| GET | List all ads | apiv1/ |
-| GET | List all tags | apiv1/tags |
-| GET | Show add by id | apiv1/:id |
-| DELETE | Delete ad by id | apivi/:id |
-| POST | Create new add | apiv1/ |
-| PUT | Update ad by id | apiv1/:id |
+| GET | List all ads | apiv1/ads |
+| GET | List all tags | apiv1/ads/tags |
+| GET | Show add by id | apiv1/ads/:id |
+| DELETE | Delete ad by id | apivi/ads/:id |
+| POST | Create new add | apiv1/ads |
+| PUT | Update ad by id | apiv1/ads/:id |
 
-### Filters:
+#### Filters:
 
 | Filter | Sample | Notes | 
 | ------------- | ------------- | ------------- |
-| by name | apiv1?name=... | filter by string |
-| by forSale | apiv1?forsale=true | true or false |
-| by price | apiv1?price=100 | price = number |
-| by price | apiv1?price=100- | price > number |
-| by price | apiv1?price=-100 | price < number |
-| by price | apiv1?price=100-500 | price between numbers |
-| by price | apiv1?price=0 | price = 0 or null |
-| by tag | apiv1?tag=book | ads with tag = string |
+| by name | apiv1/ads?name=... | filter by string |
+| by forSale | apiv1/ads?forsale=true | true or false |
+| by price | apiv1/ads?price=100 | price = number |
+| by price | apiv1/ads?price=100- | price > number |
+| by price | apiv1/ads?price=-100 | price < number |
+| by price | apiv1/ads?price=100-500 | price between numbers |
+| by price | apiv1/ads?price=0 | price = 0 or null |
+| by tag | apiv1/ads?tag=book | ads with tag = string |
 
 ### Parameters:
 | Parameter | Sample | Notes |
 | ------------- | ------------- | ------------- |
-| field | apiv1?field=name | show only name field |
-| sort | apiv1?sort=name | Sort adss by name |
-| sort | apiv1?sort=-name | Inverse sort adss by name |
-| limit | apiv1?limit=2 | Show only 2 ads |
-| skip | apiv1?skip=3 | Fetch 3 ads |
+| field | apiv1/ads?field=name | show only name field |
+| sort | apiv1/ads?sort=name | Sort adss by name |
+| sort | apiv1/ads?sort=-name | Inverse sort adss by name |
+| limit | apiv1/ads?limit=2 | Show only 2 ads |
+| skip | apiv1/ads?skip=3 | Fetch 3 ads |
 
 
 You can mix different filters:
 
-`apiv1?price=300-800&tag=phone&tag=xiaomi`
+`apiv1/ads?price=300-800&tag=phone&tag=xiaomi`
 
-`apiv1?price=-800&tag=phone&tag=xiaomi`
+`apiv1/ads?price=-800&tag=phone&tag=xiaomi`
 
-`apiv1?price=125-450&field=name&limit=3`
+`apiv1/ads?price=125-450&field=name&limit=3`
 
-`apiv1?name=iPhone&price=700-1200&forsale=true&tag=apple`
-
-
+`apiv1/ads?name=iPhone&price=700-1200&forsale=true&tag=apple`
 
 
+## New in NodeApi 0.2
+- Change confih method using .env file
+- Users model implementation
+- Users API implementation
+- Authentification with JSWT
 
 
 

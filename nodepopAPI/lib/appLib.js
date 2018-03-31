@@ -7,7 +7,7 @@ module.exports.isAPI = function (req) {
 
 
 // parseBoolena from string function
-module.exports.parseBoolean = function  (string) {
+module.exports.parseBoolean = function (string) {
     var bool;
     switch ( string.toLowerCase() ) {
         case "true": return true;
