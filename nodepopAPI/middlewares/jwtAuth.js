@@ -15,11 +15,12 @@ module.exports = function() {
 
         // Get token from request
         const token = req.body.token || req.query.token || req.get('x-access-token');
-
+        
         
         if (!token) {
             const err = new Error('No token provided');
             next(err);
+            res.status(401);
             return;
         }
 
@@ -27,9 +28,11 @@ module.exports = function() {
         jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
             
             if (err) {
-                return next(err);
+                next(err);
+                res.status(401);
+                return;
             }
-        
+
             // Get user id to be used by next middlewares
             req.apiUserId = decodedToken.sub;
       

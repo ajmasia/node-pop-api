@@ -128,7 +128,7 @@ class UserController {
                 iat: moment().unix(),
                 exp: moment().add(process.env.JWT_EXP_TIME, process.env.JWT_EXP_UNIT).unix()
             }
-        
+            
             jwt.sign(payload, process.env.JWT_SECRET, (err, token) => {
                 if (err) {
                     return next(err);
