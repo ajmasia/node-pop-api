@@ -29,7 +29,7 @@ const userSchema = mongoose.Schema({
 // Password hash method
 userSchema.statics.hashPassword = function (plain) {
     return new Promise( (resolve, reject) => {
-        bcrypt.hash(plain, 10, function(err, hash) {
+        bcrypt.hash(plain, process.env.HASH_SALT, function(err, hash) {
             if (err) {
                 reject(err);
                 return;

@@ -100,6 +100,7 @@ class UserController {
     * Sing in middleware
     * Method: POST
     * Route: /apiv1/login
+    * TODO: Implement save laslLogin date
     */
     async singIn (req, res , next) {
 
@@ -129,6 +130,7 @@ class UserController {
                 exp: moment().add(process.env.JWT_EXP_TIME, process.env.JWT_EXP_UNIT).unix()
             }
             
+            // Create token wint jsonwebtoken
             jwt.sign(payload, process.env.JWT_SECRET, (err, token) => {
                 if (err) {
                     return next(err);
