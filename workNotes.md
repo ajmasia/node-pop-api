@@ -160,3 +160,11 @@ userSchema.statics.getGravatar = function (email) {
 }
 ```
 
+## Usando los ficheros de vistas como `html`
+
+Cambiamos `app.set('view engine', 'ejs');` por `app.set('view engine', 'html');`
+Luego le decimos a express como manejar las vistas `app.engine('html', requiere('ejs'.__expresss));`
+
+## Internacionalización de vistas
+
+IMPORTANTE: Para que el sistema de cambio de idiomas en las vistas funcione con la cookie definida en i18n, las librerías han de ser cargadas después de definir que express use cookie-parser `app.use(cookieParser());`.

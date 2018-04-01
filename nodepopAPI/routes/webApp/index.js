@@ -1,13 +1,14 @@
-/**
- * NodeAPI index router with filters
- */
 'use strict';
+
+/**
+ * index.html router with filters
+ */
 
 var express = require('express');
 var router = express.Router();
 
-const Ad = require('../models/Ad');
-var appLib = require('../lib/appLib');
+const Ad = require('../../models/Ad');
+var appLib = require('../../lib/appLib');
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {

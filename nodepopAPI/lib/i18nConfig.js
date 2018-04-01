@@ -14,11 +14,14 @@ const autoReload = env === 'development';
 const updateFile = env === 'development';
 const syncFile = env === 'development';
 
-module.exports = function () {
+module.exports = function (defaultLocale) {
+    
+    defaultLocale = defaultLocale || 'en';
+
     i18n.configure({
         locales: ['en', 'es'],
         directory: path.join(__dirname, '../locales'),
-        defaultLocale: 'en',
+        defaultLocale: defaultLocale,
         // Reload locales files if there are changes
         autoReload: autoReload,
         // Create inexisting locales files
@@ -27,7 +30,10 @@ module.exports = function () {
         syncFiles: syncFile,
         // Parameter to request language config 
         queryParameter: 'lang',
+        // Use locale from this cookie
+        cookie: 'nodeapi-lang' 
     });
+
     i18n.setLocale('en');
 
     // Return i18n object configurated

@@ -9,6 +9,7 @@ const User = require('../../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const moment = require('moment');
+const i18n = require('../../lib/i18nConfig')();
 
 class UserController {
 
@@ -66,7 +67,7 @@ class UserController {
             if (existingUser.length != 0) {
                 res.status(409).send({ 
                     success: false,
-                    result: 'User already exist' 
+                    result: i18n.__('User already exist') 
                 });
                 return;
             }
@@ -118,8 +119,8 @@ class UserController {
                 res.status(401);
                 res.json({
                     success: false,
-                    result: 'Opps! Bad credentials!'
-                })
+                    result: i18n.__('Opps! Invalid credentials!')
+                });
                 return;
             }
 

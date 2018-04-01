@@ -6,7 +6,7 @@
     <%= title %>
   </title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-  crossorigin="anonymous">
+    crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
   <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
@@ -19,20 +19,30 @@
       <a class="navbar-brand" href="#">
         <%= title %>
       </a>
+
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav mr-auto">
+
+            <% getLocales().forEach( lang => { %>
+              <li class="nav-item">
+                  <a class="nav-link" href="/lang/<%= lang %>"><%= lang %></a>
+                </li>
+            <% }) %>
+        </ul>
+
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="#"><%= __('About') %></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Sing Up</a>
+            <a class="nav-link" href="#"><%= __('Sing Up') %></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Sing In</a>
+            <a class="nav-link" href="#"><%= __('Sing In') %></a>
           </li>
         </ul>
       </div>
@@ -43,7 +53,7 @@
   <div class="container">
     <!-- Jumbotron Header -->
     <header class="mb-5">
-      <h1 >
+      <h1>
         <%= __('Wellcome to') %>
           <%= title %>
       </h1>
@@ -56,29 +66,29 @@
 
     <!-- Page Features -->
     <div class="row text-center">
-    <% for(let i = 0; i < docs.length; i++) { %>
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card animated fadeIn">
-          <img class="card-img-top" src="<%= process.env.APP_IMAGES_URL + docs[i].image %>" alt="">
-          <div class="card-body">
-            <h4 class="card-title">
-              <%= docs[i].name %>
-            </h4>
-            <% for(let j = 0; j < docs[i].tags.length; j++) { %>
-              <spam class="badge badge-light">
-                <%= docs[i].tags[j] %>
-              </spam>
-              <% } %>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-warning">
-              <%= ( docs[i].price !== null ) ? docs[i].price + ' €' : __('For buy') %>
-            </a>
+      <% for(let i = 0; i < docs.length; i++) { %>
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="card animated fadeIn">
+            <img class="card-img-top" src="<%= process.env.APP_IMAGES_URL + docs[i].image %>" alt="">
+            <div class="card-body">
+              <h4 class="card-title">
+                <%= docs[i].name %>
+              </h4>
+              <% for(let j = 0; j < docs[i].tags.length; j++) { %>
+                <spam class="badge badge-light">
+                  <%= docs[i].tags[j] %>
+                </spam>
+                <% } %>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="btn btn-warning">
+                <%= ( docs[i].price !== null ) ? docs[i].price + ' €' : __('For buy') %>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-      <% } %>
-      </div>
+        <% } %>
+    </div>
     <!-- /.row -->
 
   </div>

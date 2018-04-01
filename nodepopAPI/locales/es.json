@@ -7,5 +7,11 @@
 	"Price": "Precio",
 	"For": "Para",
 	"Image": "Imagen",
-	"For buy": "Comprar"
+	"For buy": "Comprar",
+	"No token provided": "No se ha proporcionado ningún token en esta petición",
+	"User already exist": "El usuario ya existe",
+	"Opps! Invalid credentials!": "Oh! Credenciales incorrectas!",
+	"About": "Sobre",
+	"Sing Up": "Registrarse",
+	"Sing In": "Entrar"
 }

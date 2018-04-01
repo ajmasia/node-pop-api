@@ -8,6 +8,7 @@
  // Require dependences
 const jwt = require('jsonwebtoken');
 const moment = require('moment');
+const i18n = require('../lib/i18nConfig')();
 
 module.exports = function() {
     
@@ -18,7 +19,7 @@ module.exports = function() {
         
         
         if (!token) {
-            const err = new Error('No token provided');
+            const err = new Error(i18n.__('No token provided'));
             next(err);
             res.status(401);
             return;
