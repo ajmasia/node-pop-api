@@ -16,7 +16,11 @@ const adSchema = mongoose.Schema({
     tags: { type: [String], index: true }
 });
 
-// Create static method model by async function
+/**
+ * Statics methods
+ */
+
+// Ads list method
 adSchema.statics.list = function (filter, skip, limit, sort, fields, callback) {
     
     // get query whithout execute it
@@ -30,6 +34,20 @@ adSchema.statics.list = function (filter, skip, limit, sort, fields, callback) {
     
     // return execute query
     return query.exec(callback);
+}
+
+/**
+ * Instance methods
+ */
+
+// Set ads image method
+adSchema.methods.imageUrl = async function (imageUploaded) {
+
+    // Verify if exist imageUploaded
+    if (!imageUploaded) return;
+
+    // Asign image to new ad
+    return imageUploaded.filename;
 }
 
 // Create model

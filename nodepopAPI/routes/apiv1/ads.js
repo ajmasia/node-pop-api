@@ -9,6 +9,7 @@ const appLib = require('../../lib/appLib');
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator/check');
+const upload = require('../../lib/uploadConfig');
 
 // Require data model
 const Ad = require('../../models/Ad');
@@ -109,7 +110,7 @@ router.get('/tags', async (req, res, next) => {
     } catch(err) {
         return next(err);
     }
-})
+});
 
 // Get add by id middleware
 // GET method
@@ -130,17 +131,21 @@ router.get('/:id', async (req, res, next) => {
     } catch(err) {
         return next(err);
     }
-})
+});
 
 // Create ad middleware
 // POST method
 // Todo: Validation
-router.post('/', [],async (req, res, next) => {
+router.post('/', upload.single('image'), async (req, res, next) => {
     try {
 
         // Create new ad data using his model
         const newAd = new Ad(req.body);
 
+        // Add image url to new add
+        newAd.image = await newAd.imageUrl(req.file);
+
+        // Save new add
         const adSaved = await newAd.save(newAd);
 
         res.json({
@@ -173,7 +178,7 @@ router.put('/:id', async (req, res, next) => {
     } catch(err) {
         return next(err);
     }
-})
+});
 
 // Delete add middleware
 // DELETE method
@@ -187,6 +192,19 @@ router.delete('/:id', async (req, res, next) => {
     } catch(err) {
         return next(err);
     }
-})
+});
+
+router.post('/upload', upload.single('image'), (req, res, next) => {
+    try {
+        console.log(req.file.filename);
+        res.json({
+            success: true,
+            result: 'Image uploaded'
+        });
+    } catch(err) {
+        return next(err);
+    }
+  });
+
 
 module.exports = router;

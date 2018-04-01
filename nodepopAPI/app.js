@@ -61,8 +61,9 @@ app.use('/apiv1/ads', jstAuth(), require('./routes/apiv1/ads'));
  * Weba app middelwares
  */
 app.use('/', require('./routes/webApp/index'));
-// app.use('/', jstAuth(), require('./routes/index'));
 app.use('/lang', require('./routes/webApp/lang'));
+// app.use('/lang', stAuth(), require('./routes/webApp/lang'));
+// app.use('/', jstAuth(), require('./routes/index'));
 
 // Catch 404 and forward to error handler
 app.use(function(req, res, next) {
