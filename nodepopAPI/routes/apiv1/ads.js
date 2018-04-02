@@ -10,6 +10,14 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator/check');
 const upload = require('../../lib/uploadConfig');
+const path = require('path');
+const cote = require('cote');
+
+
+// Thunbnail service client
+const thunbnalRequester = new cote.Requester({ 
+    name: 'Thunbnail service client ' 
+});
 
 // Require data model
 const Ad = require('../../models/Ad');
@@ -143,10 +151,20 @@ router.post('/', upload.single('image'), async (req, res, next) => {
         const newAd = new Ad(req.body);
 
         // Add image url to new add
-        newAd.image = await newAd.imageUrl(req.file);
+        newAd.image = req.file.filename;
 
         // Save new add
         const adSaved = await newAd.save(newAd);
+        
+        // Use thunbnail service creator
+        const thunbnaulPath = path.join(__dirname, '../../public/images', adSaved.image);
+        if (adSaved.image) {
+            thunbnalRequester.send({
+                type: 'createThunbnail',
+                imageUrl: thunbnaulPath,
+                imageFile: adSaved.image
+            });
+        }
 
         res.json({
             success: true,

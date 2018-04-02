@@ -4,15 +4,27 @@
  * Create thumbnails service
  */
 
- const Cote = require('cote');
- const thunbnail = require('jimp');
- const responder = new Cote.responder({ name: 'thunbnail service' });
+const path = require('path');
+const cote = require('cote');
+const jimp = require('jimp');
+const responder = new cote.Responder({ 
+     name: 'thunbnail service responder ' 
+});
 
-// Create responder {req.image} -> image base to create thunbnail
-responder.on('create thunbnail', (req, done) => {
-    console.log('Thubnail requested', req.image);
-    const result = 
+// Create responder {req.imageUrl} -> image base to create thunbnail
+responder.on('createThunbnail', async req => {
+    try {
+        console.log('Service: Request from', req.imageUrl);
 
-    done(result);
+        const readImage = await jimp.read(req.imageUrl);
+        const thunbnail = readImage.scaleToFit(100, 100)     
+            .write(path.join(__dirname, '../public/thunbnails/') + 'thunbnail_' + req.imageFile);
+        if (thunbnail) {
+            console.log(`Thunbnail for ${req.imageFile} created successfully`);
+            return thunbnail;
+        }
 
+    } catch(err) {
+        console.log(err);
+    }
 });

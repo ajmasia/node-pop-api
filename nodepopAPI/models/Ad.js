@@ -36,20 +36,6 @@ adSchema.statics.list = function (filter, skip, limit, sort, fields, callback) {
     return query.exec(callback);
 }
 
-/**
- * Instance methods
- */
-
-// Set ads image method
-adSchema.methods.imageUrl = async function (imageUploaded) {
-
-    // Verify if exist imageUploaded
-    if (!imageUploaded) return;
-
-    // Asign image to new ad
-    return imageUploaded.filename;
-}
-
 // Create model
 const Ad = mongoose.model('Ad', adSchema);
 
