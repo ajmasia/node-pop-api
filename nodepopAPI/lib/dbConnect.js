@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 const mongoose = require('mongoose');
 const dbConnect = mongoose.connection;
 
@@ -14,10 +16,8 @@ dbConnect.on('error', err => {
 
 // once opene event
 dbConnect.once('open', () => {
-    console.log('Connected successfully to database on', process.env.MONGO_URL + process.env.DB_NAME);
+    console.log('Connected successfully to database on', process.env.MONGO_URL);
 })
 
 // connect to MongoDB
-mongoose.connect(process.env.MONGO_URL + process.env.DB_NAME);
-
-module.export = dbConnect;
+mongoose.connect(process.env.MONGO_URL);

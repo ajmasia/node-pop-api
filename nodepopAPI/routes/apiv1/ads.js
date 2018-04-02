@@ -212,17 +212,5 @@ router.delete('/:id', async (req, res, next) => {
     }
 });
 
-router.post('/upload', upload.single('image'), (req, res, next) => {
-    try {
-        console.log(req.file.filename);
-        res.json({
-            success: true,
-            result: 'Image uploaded'
-        });
-    } catch(err) {
-        return next(err);
-    }
-  });
-
 
 module.exports = router;

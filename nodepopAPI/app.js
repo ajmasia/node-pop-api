@@ -9,17 +9,18 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var appLib = require('./lib/appLib');
 
+// Requiren controllers
+const usersController = require('./controllers/apiv1/userController');
+const jstAuth = require('./middlewares/jwtAuth');
 
 // Require database connection
 const dbConnect = require('./lib/dbConnect');
 
 // Require models
 require('./models/Ad');
-require('./models/User');
+const User = require('./models/User');
 
 var app = express();
-
-
 
 // App setup
 // View engine setup
@@ -27,10 +28,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
 app.engine('html', require('ejs').__express);
 
-
-
 // Uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -43,9 +42,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 const i18n = require('./lib/i18nConfig')();
 app.use(i18n.init);
 
-// Requiren controllers
-const usersController = require('./controllers/apiv1/userController');
-const jstAuth = require('./middlewares/jwtAuth');
 
 /**
  * API middelwares
@@ -55,14 +51,14 @@ app.post('/apiv1/login', usersController.singIn);
 app.delete('/apiv1/users/:id', jstAuth(), usersController.deleteUser);
 app.put('/apiv1/users/:id', jstAuth(), usersController.updateUser);
 app.get('/apiv1/users', jstAuth(), usersController.usersList);
-app.use('/apiv1/ads', jstAuth(), require('./routes/apiv1/ads'));
+app.use('/apiv1/ads', require('./routes/apiv1/ads'));
 
 /**
- * Weba app middelwares
+ * Web app middelwares
  */
 app.use('/', require('./routes/webApp/index'));
 app.use('/lang', require('./routes/webApp/lang'));
-// app.use('/lang', stAuth(), require('./routes/webApp/lang'));
+app.use('/lang', jstAuth(), require('./routes/webApp/lang'));
 // app.use('/', jstAuth(), require('./routes/index'));
 
 // Catch 404 and forward to error handler
