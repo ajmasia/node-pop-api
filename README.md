@@ -8,26 +8,53 @@ To install NodePOP Rest API, move to app´s root directory and run this command:
 
 `npm install`
 
-When you install the app, you must configure the system parameters. You can do it by editing the file `config.js`. If you are going to test the app on a local server, you can use default parameters.
+When you install the app, you must configure the system parameters. 
+
+Copy file `.env.example` into `.env` and edit enviroment variables to setup this specific server installation.
 
 ```js
-module.exports = {
-    port: process.env.PORT || 3000,
-    mongoURL: process.env.MONGODB || 'mongodb://localhost/',
-    db: process.env.DB || 'nodepop',
-    collectionName: process.env.COLLECTION_NAME || 'ads',
-    fileData: process.env.FILE_TEST_DATA || './test_data/testData.json'
-}
+# Global apps params
+APP_IMAGES_URL = 'http://localhost:3000/images/'
+MONGO_URL = 'mongodb://localhost/'
+DB_NAME = 'nodepop'
+PORT = 3000
+
+# Security config
+JWT_SECRET = 'yoursecret'
+JWT_EXP_TIME = 10
+JWT_EXP_UNIT = 'd'
+HASH_SALT = 10
+
+# Test database install scripts
+FILE_DATA = './test_data/test_data.json'
+COLLECTION_NAME = 'ads'
+
+# E2E test
+TOKEN_TEST = 'token'
 ```
 Finaly you must reset the database. Yo can do it running the next command: 
 
 `npm run dBreset`
 
-## Start/Stop service
+Test data include an user that you can use to test NodeAPI:
+
+| User | Password |
+| ---- | -------- |
+| user@axample.com | 1234 |
+
+## Start/Stop server
+
+This app use an specific service to generate thunbnails when you upload images. Yo must run this service separately to use the app:
+
+`npm run services`
 
 To start the app, issue the following command:
 
-`npm start`
+`npm start services`
+
+To stop all services, issue the following command:
+
+`npm run stop-services`
 
 If yoy want run the app in debbug mode run the next command:
 
@@ -40,6 +67,17 @@ When you access to the home page, you will can see a page with an ads list. In t
 ## API Documentation
 
 ### Users
+
+#### The API provides the following operations:
+
+| Method  | Result | Route |
+| ------------- | ------------- | ------------- |
+| POST | Sing Up | /apiv1/singup |
+| POST | Sing In | /apiv1/login |
+| DELETE | Delete user | /apiv1/users/:id |
+| PUT | Update user | /apiv1/users/:id |
+| GET | List all users | /apiv1/users |
+
 
 ### Ads
 
@@ -87,13 +125,18 @@ You can mix different filters:
 
 `apiv1/ads?name=iPhone&price=700-1200&forsale=true&tag=apple`
 
+## e2e tests
 
-## New in NodeApi 0.2
+For API testing run `npm run e2e` command. Yoy mist define a valid token in `.env` config file. 
+
+## Change log NodeAPI 0.2
 - Change confih method using .env file
-- Users model implementation
-- Users API implementation
-- Authentification with JSWT
-
+- Users API implementation through controllers
+- API authentification with JWT
+- Views internacionalization [es, en]
+- Uplade ads images
+- Service to create thunbnails from ad image
+- Simple API e2e test
 
 
 

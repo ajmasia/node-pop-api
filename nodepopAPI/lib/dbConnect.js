@@ -16,8 +16,10 @@ dbConnect.on('error', err => {
 
 // once opene event
 dbConnect.once('open', () => {
-    console.log('Connected successfully to database on', process.env.MONGO_URL);
+    console.log('Connected successfully to database on', process.env.MONGO_URL + process.env.DB_NAME);
 })
 
 // connect to MongoDB
-mongoose.connect(process.env.MONGO_URL);
+mongoose.connect(process.env.MONGO_URL + process.env.DB_NAME);
+
+module.exports = dbConnect;

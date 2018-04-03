@@ -62,7 +62,6 @@ class UserController {
             const userName = req.body.user;
     
             const existingUser = await User.find({$or: [ {name: userName}, {email: userEmail} ]});
-            console.log(existingUser.length);
             
             if (existingUser.length != 0) {
                 res.status(409).send({ 

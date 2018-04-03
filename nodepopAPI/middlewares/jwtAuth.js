@@ -14,23 +14,25 @@ module.exports = function () {
     return function (req, res, next) {
 
         // Get token from request
-        const token = req.body.token || req.query.token || req.get('x-access-token');
+        let token = req.body.token || req.query.token || req.get('x-access-token') || req.get('authorization');
 
 
+        if (token && token.split(' ').length > 1) {
+            token = token.split(' ')[1]
+        }
+        
         if (!token) {
             const err = new Error(i18n.__('No token provided'));
-            next(err);
-            res.status(401);
-            return;
+            err.status = 401
+            return next(err);
         }
 
         // Verify token
         jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
 
             if (err) {
-                next(err);
-                res.status(401);
-                return;
+                err.status = 401
+                return next(err);
             }
 
             // Get user id to be used by next middlewares

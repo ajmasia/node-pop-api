@@ -18,7 +18,7 @@ const dbConnect = require('./lib/dbConnect');
 
 // Require models
 require('./models/Ad');
-const User = require('./models/User');
+require('./models/User');
 
 var app = express();
 
@@ -42,6 +42,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 const i18n = require('./lib/i18nConfig')();
 app.use(i18n.init);
 
+/**
+ * Web app middelwares
+ */
+app.use('/', require('./routes/webApp/index'));
+app.use('/lang', require('./routes/webApp/lang'));
+// app.use('/lang', jstAuth(), require('./routes/webApp/lang'));
+// app.use('/', jstAuth(), require('./routes/webApp/index'));
 
 /**
  * API middelwares
@@ -51,15 +58,8 @@ app.post('/apiv1/login', usersController.singIn);
 app.delete('/apiv1/users/:id', jstAuth(), usersController.deleteUser);
 app.put('/apiv1/users/:id', jstAuth(), usersController.updateUser);
 app.get('/apiv1/users', jstAuth(), usersController.usersList);
-app.use('/apiv1/ads', require('./routes/apiv1/ads'));
+app.use('/apiv1/ads', jstAuth(), require('./routes/apiv1/ads'));
 
-/**
- * Web app middelwares
- */
-app.use('/', require('./routes/webApp/index'));
-app.use('/lang', require('./routes/webApp/lang'));
-app.use('/lang', jstAuth(), require('./routes/webApp/lang'));
-// app.use('/', jstAuth(), require('./routes/index'));
 
 // Catch 404 and forward to error handler
 app.use(function(req, res, next) {

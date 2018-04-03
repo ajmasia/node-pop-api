@@ -4,7 +4,7 @@
  * User model data
  */
 
- // Require mongoose library
+// Require mongoose library
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
@@ -29,7 +29,7 @@ const userSchema = mongoose.Schema({
 // Password hash method
 userSchema.statics.hashPassword = function (plain) {
     return new Promise( (resolve, reject) => {
-        bcrypt.hash(plain, process.env.HASH_SALT, function(err, hash) {
+        bcrypt.hash(plain, parseInt(process.env.HASH_SALT), function(err, hash) {
             if (err) {
                 reject(err);
                 return;
