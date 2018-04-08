@@ -127,7 +127,8 @@ You can mix different filters:
 
 ## e2e tests
 
-For API testing run `npm run e2e` command. Yoy mist define a valid token in `.env` config file. 
+For API testing run `npm run e2e` command with app and database running. 
+You must define a valid token in `.env` config file. 
 
 ## Change log NodeAPI 0.2
 - Change confih method using .env file
