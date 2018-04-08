@@ -9,7 +9,7 @@ const User = require('../../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const moment = require('moment');
-const i18n = require('../../lib/i18nConfig')();
+// const i18n = require('../../lib/i18nConfig')();
 
 class UserController {
 
@@ -66,7 +66,7 @@ class UserController {
             if (existingUser.length != 0) {
                 res.status(409).send({ 
                     success: false,
-                    result: i18n.__('User already exist') 
+                    result: res.__('User already exist') 
                 });
                 return;
             }
@@ -118,7 +118,7 @@ class UserController {
                 res.status(401);
                 res.json({
                     success: false,
-                    result: i18n.__('Opps! Invalid credentials!')
+                    result: res.__('Opps! Invalid credentials!')
                 });
                 return;
             }
@@ -137,7 +137,7 @@ class UserController {
                 }
                 res.json({
                     success: true,
-                    result: `Wellcome to NodePop ${existingUser.displayName}`,
+                    result: res.__('Wellcome to NodePop ') + existingUser.displayName,
                     token: token
                 });
             });

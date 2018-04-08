@@ -5,8 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "cross-env DEBUG=nodepop:* nodemon ./bin/www",
-    "services": "pm2 start ./services/thunbnailService.js",
-    "stop-services": "pm2 delete thunbnailService",
+    "services": "pm2 start ./services/thumbnailService.js",
+    "stop-services": "pm2 delete thumbnailService",
     "dbReset": "node ./installScripts/dbReset",
     "e2e": "./node_modules/.bin/mocha ./e2e/test.e2e.js"
   },

@@ -10,8 +10,9 @@
 	"For buy": "Comprar",
 	"No token provided": "No se ha proporcionado ningún token en esta petición",
 	"User already exist": "El usuario ya existe",
-	"Opps! Invalid credentials!": "Oh! Credenciales incorrectas!",
+	"Opps! Invalid credentials!": "Vaya! Las credenciales son incorrectas!",
 	"About": "Sobre",
 	"Sing Up": "Registrarse",
-	"Sing In": "Entrar"
+	"Sing In": "Entrar",
+	"Wellcome to NodePop ": "Bienvenido a NodePop "
 }

@@ -15,8 +15,8 @@ const cote = require('cote');
 
 
 // Thunbnail service client
-const thunbnalRequester = new cote.Requester({ 
-    name: 'Thunbnail service client ' 
+const thumbnailRequester = new cote.Requester({ 
+    name: 'Thumbnail service client ' 
 });
 
 // Require data model
@@ -157,11 +157,11 @@ router.post('/', upload.single('image'), async (req, res, next) => {
         const adSaved = await newAd.save(newAd);
         
         // Use thunbnail service creator
-        const thunbnaulPath = path.join(__dirname, '../../public/images', adSaved.image);
+        const thumbnailPath = path.join(__dirname, '../../public/images', adSaved.image);
         if (adSaved.image) {
-            thunbnalRequester.send({
-                type: 'createThunbnail',
-                imageUrl: thunbnaulPath,
+            thumbnailRequester.send({
+                type: 'createThumbnail',
+                imageUrl: thumbnailPath,
                 imageFile: adSaved.image
             });
         }

@@ -22,7 +22,7 @@ module.exports = function () {
         }
         
         if (!token) {
-            const err = new Error(i18n.__('No token provided'));
+            const err = new Error(res.__('No token provided'));
             err.status = 401
             return next(err);
         }
