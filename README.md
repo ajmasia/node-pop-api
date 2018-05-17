@@ -1,14 +1,16 @@
 # NodePop 0.2
+
 A Rest API to learn coding
 
 ## Instalation
+
 This app need a MongoDB engine to work. Before installing this app we must to know the correct parameters to access to database server.
 
 To install NodePOP Rest API, move to app´s root directory and run this command:
 
 `npm install`
 
-When you install the app, you must configure the system parameters. 
+When you install the app, you must configure the system parameters.
 
 Copy file `.env.example` into `.env` and edit enviroment variables to setup this specific server installation.
 
@@ -32,21 +34,22 @@ COLLECTION_NAME = 'ads'
 # E2E test
 TOKEN_TEST = 'token'
 ```
-Finaly you must reset the database. Yo can do it running the next command: 
+
+Finaly you must reset the database. Yo can do it running the next command:
 
 `npm run dBreset`
 
 Test data include an user that you can use to test NodeAPI:
 
-| User | Password |
-| ---- | -------- |
-| user@axample.com | 1234 |
+| User             | Password |
+| ---------------- | -------- |
+| user@axample.com | 1234     |
 
 ## Start/Stop server
 
 This app use an specific service to generate thunbnails when you upload images. Yo must run this service separately to use the app:
 
-`npm run services`
+`npm run start`
 
 To start the app, issue the following command:
 
@@ -70,50 +73,49 @@ When you access to the home page, you will can see a page with an ads list. In t
 
 #### The API provides the following operations:
 
-| Method  | Result | Route |
-| ------------- | ------------- | ------------- |
-| POST | Sing Up | /apiv1/singup |
-| POST | Sing In | /apiv1/login |
-| DELETE | Delete user | /apiv1/users/:id |
-| PUT | Update user | /apiv1/users/:id |
-| GET | List all users | /apiv1/users |
-
+| Method | Result         | Route            |
+| ------ | -------------- | ---------------- |
+| POST   | Sing Up        | /apiv1/singup    |
+| POST   | Sing In        | /apiv1/login     |
+| DELETE | Delete user    | /apiv1/users/:id |
+| PUT    | Update user    | /apiv1/users/:id |
+| GET    | List all users | /apiv1/users     |
 
 ### Ads
 
 #### The API provides the following operations:
 
-| Method  | Result | Route |
-| ------------- | ------------- | ------------- |
-| GET | List all ads | apiv1/ads |
-| GET | List all tags | apiv1/ads/tags |
-| GET | Show add by id | apiv1/ads/:id |
-| DELETE | Delete ad by id | apivi/ads/:id |
-| POST | Create new add | apiv1/ads |
-| PUT | Update ad by id | apiv1/ads/:id |
+| Method | Result          | Route          |
+| ------ | --------------- | -------------- |
+| GET    | List all ads    | apiv1/ads      |
+| GET    | List all tags   | apiv1/ads/tags |
+| GET    | Show add by id  | apiv1/ads/:id  |
+| DELETE | Delete ad by id | apivi/ads/:id  |
+| POST   | Create new add  | apiv1/ads      |
+| PUT    | Update ad by id | apiv1/ads/:id  |
 
 #### Filters:
 
-| Filter | Sample | Notes | 
-| ------------- | ------------- | ------------- |
-| by name | apiv1/ads?name=... | filter by string |
-| by forSale | apiv1/ads?forsale=true | true or false |
-| by price | apiv1/ads?price=100 | price = number |
-| by price | apiv1/ads?price=100- | price > number |
-| by price | apiv1/ads?price=-100 | price < number |
-| by price | apiv1/ads?price=100-500 | price between numbers |
-| by price | apiv1/ads?price=0 | price = 0 or null |
-| by tag | apiv1/ads?tag=book | ads with tag = string |
+| Filter     | Sample                  | Notes                 |
+| ---------- | ----------------------- | --------------------- |
+| by name    | apiv1/ads?name=...      | filter by string      |
+| by forSale | apiv1/ads?forsale=true  | true or false         |
+| by price   | apiv1/ads?price=100     | price = number        |
+| by price   | apiv1/ads?price=100-    | price > number        |
+| by price   | apiv1/ads?price=-100    | price < number        |
+| by price   | apiv1/ads?price=100-500 | price between numbers |
+| by price   | apiv1/ads?price=0       | price = 0 or null     |
+| by tag     | apiv1/ads?tag=book      | ads with tag = string |
 
 ### Parameters:
-| Parameter | Sample | Notes |
-| ------------- | ------------- | ------------- |
-| field | apiv1/ads?field=name | show only name field |
-| sort | apiv1/ads?sort=name | Sort adss by name |
-| sort | apiv1/ads?sort=-name | Inverse sort adss by name |
-| limit | apiv1/ads?limit=2 | Show only 2 ads |
-| skip | apiv1/ads?skip=3 | Fetch 3 ads |
 
+| Parameter | Sample               | Notes                     |
+| --------- | -------------------- | ------------------------- |
+| field     | apiv1/ads?field=name | show only name field      |
+| sort      | apiv1/ads?sort=name  | Sort adss by name         |
+| sort      | apiv1/ads?sort=-name | Inverse sort adss by name |
+| limit     | apiv1/ads?limit=2    | Show only 2 ads           |
+| skip      | apiv1/ads?skip=3     | Fetch 3 ads               |
 
 You can mix different filters:
 
@@ -127,18 +129,16 @@ You can mix different filters:
 
 ## e2e tests
 
-For API testing run `npm run e2e` command with app and database running. 
+For API testing run `npm run e2e` command with app and database running.
 
-You must define a valid token in `.env` config file. 
+You must define a valid token in `.env` config file.
 
 ## Change log NodeAPI 0.2
-- Change confih method using .env file
-- Users API implementation through controllers
-- API authentification with JWT
-- Views internacionalization [es, en]
-- Uplade ads images
-- Service to create thunbnails from ad image
-- Simple API e2e test
 
-
-
+* Change confih method using .env file
+* Users API implementation through controllers
+* API authentification with JWT
+* Views internacionalization [es, en]
+* Uplade ads images
+* Service to create thunbnails from ad image
+* Simple API e2e test
