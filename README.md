@@ -4,15 +4,22 @@ A Rest API to learn coding
 
 ## Demo
 
-You can find the last version of this API running at: [http://nodepop.antoniomasia.com](http://nodepop.antoniomasia.com)
+You can find the last version of this NodePopr API running at: [http://nodepop.antoniomasia.com](http://nodepop.antoniomasia.com)
 
-The API is running behind an Nginx inverse proxy which also serves all app's static resources, like ad's images or css files, through HTTP port 80.
+Testing statics images files: [http://nodepop.antoniomasia.com/images/synology_ds717p.jpg](http://nodepop.antoniomasia.com/images/synology_ds717p.jpg)
+
+The API is running behind an Nginx inverse proxy which also serves all app's static resources, like ad's images or css files, through HTTPS.
 
 You can call the HTTP method GET /apiv1/ads to get a list of all test ads stored in the database. Each ad has an associated image stored in the virtual path /images/ads to test static files retrieving, for example:
 
 Remeber to first get authenticated by calling HTTP method POST /apiv1/login, informing body keys email and password in the HTTP request (see sample user credentials below). To inform the access token in every API call, use header key x-access-token in the HTTP request or directly by url param.
 
 `http://nodepop.antoniomasia.com/apiv1/ads?token=YOURTOKEN`
+
+### Exercise 02 KeepCoding devOps
+
+You can access to static game at: [http://citiesquiz.antoniomasia.com/](https://citiesquiz.antoniomasia.com/)
+You can find Cities Quiz repo in [GitHub](https://github.com/ajmasia/citiesQuiz).
 
 ## Instalation
 
