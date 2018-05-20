@@ -19,6 +19,7 @@ Remeber to first get authenticated by calling HTTP method POST /apiv1/login, inf
 ### Exercise 02 KeepCoding devOps
 
 You can access to Cities Quiz game at: [http://citiesquiz.antoniomasia.com/](https://citiesquiz.antoniomasia.com/)
+
 You can find Cities Quiz repo in [GitHub](https://github.com/ajmasia/citiesQuiz).
 
 ## Instalation
